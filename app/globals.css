@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family:
+    var(--font-pretendard),
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    sans-serif;
+}
+
+.prose-article {
+  @apply prose prose-neutral max-w-none text-neutral-700 dark:text-neutral-300;
+  @apply prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-neutral-900 dark:prose-headings:text-neutral-100;
+  @apply prose-p:leading-[1.75] prose-p:my-5;
+  @apply prose-a:text-neutral-900 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-neutral-600 dark:prose-a:text-neutral-100 dark:hover:prose-a:text-neutral-300;
+  @apply prose-strong:text-neutral-900 dark:prose-strong:text-neutral-100;
+  @apply prose-blockquote:border-l-neutral-300 prose-blockquote:bg-neutral-50 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r dark:prose-blockquote:border-neutral-600 dark:prose-blockquote:bg-neutral-800/50;
+  @apply prose-li:my-1;
+  @apply prose-img:rounded-lg prose-img:max-w-full prose-img:h-auto;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Code block & table – prose와 prose-article 공통 */
+.prose pre,
+.prose-article pre {
+  @apply bg-neutral-900 dark:bg-neutral-950 text-neutral-100 rounded-lg p-4 overflow-x-auto text-sm border border-neutral-800 dark:border-neutral-800;
+}
+
+.prose code,
+.prose-article code {
+  @apply bg-neutral-100 px-1.5 py-0.5 rounded text-sm text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200;
+}
+
+.prose code::before,
+.prose code::after,
+.prose-article code::before,
+.prose-article code::after {
+  content: none;
+}
+
+.prose pre code,
+.prose-article pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.prose pre code .hljs,
+.prose-article pre code .hljs {
+  @apply bg-transparent;
+}
+
+.prose table,
+.prose-article table {
+  @apply w-full border-collapse my-6 text-sm;
+}
+
+.prose thead,
+.prose-article thead {
+  @apply border-b-2 border-neutral-200 dark:border-neutral-700;
+}
+
+.prose th,
+.prose-article th {
+  @apply px-4 py-3 text-left font-semibold text-neutral-900 dark:text-neutral-100;
+}
+
+.prose td,
+.prose-article td {
+  @apply px-4 py-3 border-b border-neutral-100 text-neutral-700 dark:border-neutral-800 dark:text-neutral-300;
+}
+
+.prose ul.contains-task-list,
+.prose-article ul.contains-task-list {
+  @apply list-none pl-0;
+}
+
+.prose li.task-list-item,
+.prose-article li.task-list-item {
+  @apply flex items-start;
+}
+
+.prose input[type="checkbox"],
+.prose-article input[type="checkbox"] {
+  @apply mr-2 accent-neutral-700;
+}
+
+.prose li.task-list-item input[type="checkbox"],
+.prose-article li.task-list-item input[type="checkbox"] {
+  @apply mt-1;
+}

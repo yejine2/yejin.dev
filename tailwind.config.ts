@@ -9,9 +9,23 @@ const config: Config = {
     "./content/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+      fontFamily: {
+        sans: [
+          "var(--font-pretendard)",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+        serif: ["var(--font-instrument-serif)", "ui-serif", "Georgia", "serif"],
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
-
 export default config;
