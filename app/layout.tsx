@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import {
   SITE_NAME,
   SITE_DESCRIPTION,
+  SITE_URL,
   DEFAULT_LANG,
   THEME_ATTRIBUTE,
   THEME_DEFAULT,
@@ -47,6 +48,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,

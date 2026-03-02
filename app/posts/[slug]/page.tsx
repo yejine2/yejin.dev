@@ -28,7 +28,16 @@ function buildPostMetadata(post: Post): Metadata {
     openGraph: {
       title: post.title,
       description,
-      ...(ogImage && { images: [{ url: ogImage }] }),
+      ...(ogImage && {
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          },
+        ],
+      }),
     },
   };
 }
