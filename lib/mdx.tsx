@@ -1,6 +1,7 @@
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import remarkRehype from "remark-rehype";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
@@ -48,6 +49,7 @@ export async function renderMarkdown(
       await unified()
         .use(remarkParse)
         .use(remarkGfm)
+        .use(remarkBreaks)
         .use(remarkImagePath, { slug })
         .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeRaw)
