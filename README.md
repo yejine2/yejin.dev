@@ -39,6 +39,7 @@ pnpm dev
   마크다운 문자열
     → remark-parse (mdast)
     → remark-gfm (GFM 확장)
+    → remark-breaks (단일 줄바꿈을 `<br>` 로 처리)
     → remarkImagePath (상대 경로 이미지 → /posts/{slug}/...)
     → remark-rehype (hast, allowDangerousHtml)
     → rehype-raw (raw HTML 노드 해석)
