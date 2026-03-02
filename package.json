@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "fast-glob": "^3.3.2",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.10.0",
