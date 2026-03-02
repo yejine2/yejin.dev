@@ -27,12 +27,13 @@ body {
 .prose-article {
   @apply prose prose-neutral max-w-none text-neutral-700 dark:text-neutral-300;
   @apply prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-neutral-900 dark:prose-headings:text-neutral-100;
-  @apply prose-p:leading-[1.75] prose-p:my-5;
+  @apply prose-p:leading-[1.75] prose-p:my-4;
   @apply prose-a:text-neutral-900 prose-a:underline prose-a:underline-offset-2 hover:prose-a:text-neutral-600 dark:prose-a:text-neutral-100 dark:hover:prose-a:text-neutral-300;
   @apply prose-strong:text-neutral-900 dark:prose-strong:text-neutral-100;
   @apply prose-blockquote:border-l-neutral-300 prose-blockquote:bg-neutral-50 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r dark:prose-blockquote:border-neutral-600 dark:prose-blockquote:bg-neutral-800/50;
   @apply prose-li:my-1;
-  @apply prose-img:rounded-lg prose-img:max-w-full prose-img:h-auto;
+  @apply prose-img:rounded-lg prose-img:max-w-full prose-img:h-auto prose-img:my-6;
+  @apply prose-hr:border-neutral-200 prose-hr:dark:border-neutral-700 prose-hr:my-8;
 }
 
 @layer utilities {
