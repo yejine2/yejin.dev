@@ -6,6 +6,11 @@ import { MESSAGES } from "@/constants/messages";
 export const metadata: Metadata = {
   title: MESSAGES.NOT_FOUND_TITLE,
   description: MESSAGES.NOT_FOUND_MESSAGE,
+  openGraph: {
+    title: MESSAGES.NOT_FOUND_TITLE,
+    description: MESSAGES.NOT_FOUND_MESSAGE,
+  },
+  robots: { index: false, follow: false },
 };
 
 export default function NotFound() {

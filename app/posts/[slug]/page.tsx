@@ -22,12 +22,16 @@ function buildPostMetadata(post: Post): Metadata {
       : `${SITE_URL}${post.thumbnail}`;
   }
 
+  const postUrl = `${SITE_URL}/posts/${post.slug}`;
+
   return {
     title: post.title,
     description,
     openGraph: {
       title: post.title,
       description,
+      url: postUrl,
+      type: "article",
       ...(ogImage && {
         images: [
           {
