@@ -27,6 +27,9 @@ function buildPostMetadata(post: Post): Metadata {
   return {
     title: post.title,
     description,
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
       title: post.title,
       description,
