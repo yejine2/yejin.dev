@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getPostBySlug, getPostSlugs, type Post } from "@/lib/posts";
+import Link from "next/link";
+import {
+  getPostBySlug,
+  getPostSlugs,
+  getAdjacentPosts,
+  type Post,
+} from "@/lib/posts";
 import { formatDateShort } from "@/lib/utils";
 import { renderMarkdown } from "@/lib/mdx";
 import { MDXContent } from "@/components/mdx-content";
@@ -71,7 +77,10 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
   const post = await getPostOrNotFound(slug);
-  const htmlContent = await renderMarkdown(post.content, slug);
+  const [htmlContent, { prev, next }] = await Promise.all([
+    renderMarkdown(post.content, slug),
+    getAdjacentPosts(slug),
+  ]);
 
   return (
     <>
@@ -107,6 +116,52 @@ export default async function PostPage({
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
           </MDXContent>
         </article>
+        <nav className="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-2 gap-4">
+          {prev ? (
+            <Link
+              href={`/posts/${prev.slug}`}
+              className="group flex flex-col gap-1 text-left"
+            >
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                ← 이전 글
+              </span>
+              <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors line-clamp-2">
+                {prev.title}
+              </span>
+            </Link>
+          ) : (
+            <div className="flex flex-col gap-1 text-left opacity-30 select-none">
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                ← 이전 글
+              </span>
+              <span className="text-sm font-medium text-neutral-400 dark:text-neutral-600">
+                이전 글이 없습니다
+              </span>
+            </div>
+          )}
+          {next ? (
+            <Link
+              href={`/posts/${next.slug}`}
+              className="group flex flex-col gap-1 text-right ml-auto"
+            >
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                다음 글 →
+              </span>
+              <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors line-clamp-2">
+                {next.title}
+              </span>
+            </Link>
+          ) : (
+            <div className="flex flex-col gap-1 text-right ml-auto opacity-30 select-none">
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                다음 글 →
+              </span>
+              <span className="text-sm font-medium text-neutral-400 dark:text-neutral-600">
+                다음 글이 없습니다
+              </span>
+            </div>
+          )}
+        </nav>
       </main>
     </>
   );

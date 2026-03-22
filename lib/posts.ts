@@ -82,6 +82,25 @@ export async function getPosts(): Promise<Post[]> {
   return posts;
 }
 
+export interface AdjacentPosts {
+  prev: Pick<Post, "slug" | "title"> | null;
+  next: Pick<Post, "slug" | "title"> | null;
+}
+
+export async function getAdjacentPosts(slug: string): Promise<AdjacentPosts> {
+  const posts = await getPosts();
+  const index = posts.findIndex((p) => p.slug === slug);
+  if (index === -1) return { prev: null, next: null };
+
+  const newer = index > 0 ? posts[index - 1] : null;
+  const older = index < posts.length - 1 ? posts[index + 1] : null;
+
+  return {
+    prev: older ? { slug: older.slug, title: older.title } : null,
+    next: newer ? { slug: newer.slug, title: newer.title } : null,
+  };
+}
+
 function isPost(post: Post | null): post is Post {
   return post !== null;
 }
