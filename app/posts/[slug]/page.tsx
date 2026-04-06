@@ -11,7 +11,13 @@ import {
 import { formatDateShort } from "@/lib/utils";
 import { renderMarkdown } from "@/lib/mdx";
 import { MDXContent } from "@/components/mdx-content";
-import { DEFAULT_CATEGORY, SITE_URL, SITE_DESCRIPTION } from "@/constants/site";
+import { PostJsonLd } from "@/components/post-json-ld";
+import {
+  AUTHOR_NAME,
+  DEFAULT_CATEGORY,
+  SITE_URL,
+  SITE_DESCRIPTION,
+} from "@/constants/site";
 
 async function getPostOrNotFound(slug: string): Promise<Post> {
   const post = await getPostBySlug(slug);
@@ -41,6 +47,9 @@ function buildPostMetadata(post: Post): Metadata {
       description,
       url: postUrl,
       type: "article",
+      publishedTime: post.date,
+      authors: [AUTHOR_NAME],
+      section: post.category ?? DEFAULT_CATEGORY,
       ...(ogImage && {
         images: [
           {
@@ -84,6 +93,7 @@ export default async function PostPage({
 
   return (
     <>
+      <PostJsonLd post={post} />
       <header className="border-b border-neutral-200 dark:border-neutral-800 sm:py-10 py-6 flex flex-col items-center gap-6 sm:gap-10">
         {post.thumbnail && (
           <div className="w-full overflow-hidden sm:max-w-2xl sm:mx-auto sm:rounded-xl">
