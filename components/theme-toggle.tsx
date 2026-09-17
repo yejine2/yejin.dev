@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { SunIcon, MoonIcon } from "@/components/icons";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { MESSAGES } from "@/constants/messages";
 
 export function ThemeToggle() {
@@ -35,7 +35,11 @@ export function ThemeToggle() {
         isDark ? MESSAGES.THEME_SWITCH_TO_LIGHT : MESSAGES.THEME_SWITCH_TO_DARK
       }
     >
-      {isDark ? <SunIcon size={18} /> : <MoonIcon size={18} />}
+      {isDark ? (
+        <SunIcon width={18} height={18} />
+      ) : (
+        <MoonIcon width={18} height={18} />
+      )}
     </button>
   );
 }

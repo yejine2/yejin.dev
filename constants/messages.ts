@@ -17,4 +17,6 @@ export const MESSAGES = {
   NOT_FOUND_LINK: "홈으로 돌아가기",
 
   FOOTER_RIGHTS: "All rights reserved.",
+  FOOTER_GITHUB_LABEL: "GitHub 프로필",
+  FOOTER_EMAIL_LABEL: "이메일 보내기",
 } as const;
