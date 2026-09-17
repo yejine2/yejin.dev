@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { HOME_PATH } from "@/constants/paths";
 import { MESSAGES } from "@/constants/messages";
+import { HEADER_TOC_SLOT_ID } from "@/constants/dom";
 import { SITE_NAME } from "@/constants";
 
 export function Header() {
@@ -26,7 +27,10 @@ export function Header() {
               {MESSAGES.HEADER_BRAND_SUFFIX}
             </span>
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center gap-1">
+            <div id={HEADER_TOC_SLOT_ID} className="flex items-center" />
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>

@@ -5,6 +5,10 @@ export const MESSAGES = {
 
   EMPTY_POSTS: "작성된 포스트가 없습니다.",
 
+  TOC_TITLE: "목차",
+  TOC_OPEN: "목차 열기",
+  TOC_CLOSE: "목차 닫기",
+
   THEME_SWITCH_TO_LIGHT: "라이트 모드로 전환",
   THEME_SWITCH_TO_DARK: "다크 모드로 전환",
 
