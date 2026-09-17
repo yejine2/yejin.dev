@@ -3,60 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Cross2Icon, ListBulletIcon } from "@radix-ui/react-icons";
+import { useActiveHeadingId } from "@/components/posts/use-active-heading-id";
 import { HEADER_TOC_SLOT_ID } from "@/constants/dom";
 import { MESSAGES } from "@/constants/messages";
 import type { TocItem } from "@/lib/mdx";
 
-const ACTIVE_LINE_OFFSET = 140;
+const ICON_BUTTON_CLASS =
+  "inline-flex items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100";
+
+const LINK_CLASS = "block text-sm leading-relaxed transition-colors";
 
 function unlockScroll() {
   document.documentElement.style.overflow = "";
-}
-
-interface PostTocProps {
-  items: TocItem[];
-}
-
-function useActiveHeadingId(items: TocItem[]): string | null {
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const idsKey = items.map((item) => item.id).join("\n");
-
-  useEffect(() => {
-    const headings = idsKey
-      .split("\n")
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (headings.length === 0) return;
-
-    const update = () => {
-      let current = headings[0].id;
-      for (const heading of headings) {
-        if (heading.getBoundingClientRect().top > ACTIVE_LINE_OFFSET) break;
-        current = heading.id;
-      }
-      setActiveId(current);
-    };
-
-    let frame = 0;
-    const schedule = () => {
-      if (frame !== 0) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        update();
-      });
-    };
-
-    update();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      if (frame !== 0) cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [idsKey]);
-
-  return activeId;
 }
 
 function useHeaderSlot(): HTMLElement | null {
@@ -69,25 +27,35 @@ function useHeaderSlot(): HTMLElement | null {
   return slot;
 }
 
+interface TocLinksProps {
+  items: TocItem[];
+  activeId: string | null;
+  rail?: boolean;
+  onNavigate?: () => void;
+  className?: string;
+}
+
 function TocLinks({
   items,
   activeId,
   rail = false,
   onNavigate,
   className,
-}: PostTocProps & {
-  activeId: string | null;
-  rail?: boolean;
-  onNavigate?: () => void;
-  className?: string;
-}) {
+}: TocLinksProps) {
   return (
     <ol className={className}>
       {items.map((item) => {
         const isActive = item.id === activeId;
-        const railClassName = isActive
-          ? "border-l-2 border-neutral-900 dark:border-neutral-100"
-          : "border-l-2 border-neutral-200 dark:border-neutral-800";
+        const railClassName = `border-l-2 ${
+          isActive
+            ? "border-neutral-900 dark:border-neutral-100"
+            : "border-neutral-200 dark:border-neutral-800"
+        }`;
+        const linkClassName = `${LINK_CLASS} ${
+          isActive
+            ? "text-neutral-900 dark:text-neutral-100"
+            : "text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+        }`;
 
         return (
           <li key={item.id} className={rail ? railClassName : undefined}>
@@ -95,11 +63,7 @@ function TocLinks({
               href={`#${item.id}`}
               onClick={onNavigate}
               aria-current={isActive ? "location" : undefined}
-              className={
-                isActive
-                  ? "block text-sm leading-relaxed text-neutral-900 transition-colors dark:text-neutral-100"
-                  : "block text-sm leading-relaxed text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-              }
+              className={linkClassName}
             >
               {item.text}
             </a>
@@ -110,7 +74,7 @@ function TocLinks({
   );
 }
 
-export function PostToc({ items }: PostTocProps) {
+export function PostToc({ items }: { items: TocItem[] }) {
   const activeId = useActiveHeadingId(items);
   const slot = useHeaderSlot();
   const sheetRef = useRef<HTMLDialogElement>(null);
@@ -135,7 +99,7 @@ export function PostToc({ items }: PostTocProps) {
             type="button"
             onClick={openSheet}
             aria-label={MESSAGES.TOC_OPEN}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 xl:hidden"
+            className={`${ICON_BUTTON_CLASS} h-9 w-9 xl:hidden`}
           >
             <ListBulletIcon width={18} height={18} />
           </button>,
@@ -160,7 +124,7 @@ export function PostToc({ items }: PostTocProps) {
               type="button"
               onClick={closeSheet}
               aria-label={MESSAGES.TOC_CLOSE}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
+              className={`${ICON_BUTTON_CLASS} h-8 w-8`}
             >
               <Cross2Icon width={16} height={16} />
             </button>
