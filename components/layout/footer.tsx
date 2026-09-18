@@ -1,4 +1,5 @@
-import { EnvelopeClosedIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Mail } from "lucide-react";
+import { GithubIcon } from "@/components/icons/github-icon";
 import {
   AUTHOR_NAME,
   AUTHOR_EMAIL,
@@ -24,24 +25,14 @@ export function Footer() {
               className="inline-flex items-center hover:opacity-80 transition-opacity"
               aria-label={MESSAGES.FOOTER_GITHUB_LABEL}
             >
-              <GitHubLogoIcon
-                width={20}
-                height={20}
-                className="text-current"
-                aria-hidden
-              />
+<GithubIcon size={20} className="text-current" />
             </a>
             <a
               href={`mailto:${AUTHOR_EMAIL}`}
               className="inline-flex items-center hover:opacity-80 transition-opacity"
               aria-label={MESSAGES.FOOTER_EMAIL_LABEL}
             >
-              <EnvelopeClosedIcon
-                width={20}
-                height={20}
-                className="text-current"
-                aria-hidden
-              />
+<Mail size={20} className="text-current" />
             </a>
           </div>
         </div>

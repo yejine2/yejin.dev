@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Cross2Icon, ListBulletIcon } from "@radix-ui/react-icons";
+import { AlignRight, X } from "lucide-react";
 import { useActiveHeadingId } from "@/components/posts/use-active-heading-id";
 import { HEADER_TOC_SLOT_ID } from "@/constants/dom";
 import { MESSAGES } from "@/constants/messages";
@@ -101,7 +101,7 @@ export function PostToc({ items }: { items: TocItem[] }) {
             aria-label={MESSAGES.TOC_OPEN}
             className={`${ICON_BUTTON_CLASS} h-9 w-9 xl:hidden`}
           >
-            <ListBulletIcon width={18} height={18} />
+            <AlignRight size={18} />
           </button>,
           slot,
         )}
@@ -126,7 +126,7 @@ export function PostToc({ items }: { items: TocItem[] }) {
               aria-label={MESSAGES.TOC_CLOSE}
               className={`${ICON_BUTTON_CLASS} h-8 w-8`}
             >
-              <Cross2Icon width={16} height={16} />
+              <X size={16} />
             </button>
           </div>
           <TocLinks
